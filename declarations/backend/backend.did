@@ -1,0 +1,69 @@
+type http_request_result = 
+ record {
+   body: blob;
+   headers: vec http_header;
+   status: nat;
+ };
+type http_header = 
+ record {
+   name: text;
+   value: text;
+ };
+type TransformationOutput = 
+ record {
+   body: blob;
+   headers: vec http_header;
+   status: nat;
+ };
+type TransformationInput = 
+ record {
+   context: blob;
+   response: http_request_result;
+ };
+type Time = int;
+type GameType = 
+ variant {
+   bridge;
+   canasta;
+ };
+type GameData = 
+ record {
+   createdAt: Time;
+   finalScore: opt int;
+   gameType: GameType;
+ };
+type CanastaRound = 
+ record {
+   nsScore: int;
+   roundNumber: nat;
+   timestamp: Time;
+   weScore: int;
+ };
+type BridgeDeal = 
+ record {
+   actualScore: int;
+   contract: text;
+   dealNumber: nat;
+   declarer: text;
+   expectedScore: int;
+   impScore: int;
+   pcValue: int;
+   timestamp: Time;
+   tricksTaken: nat;
+ };
+service : {
+  createGame: (code: text, gameType: GameType) -> ();
+  downloadSourceCode: () -> (text);
+  finishGame: (code: text, finalScore: int) -> ();
+  generateGameCode: (userInput: text) -> (text);
+  getAllGames: () -> (vec record {
+                            text;
+                            GameData;
+                          });
+  getBridgeDeals: (gameCode: text) -> (vec BridgeDeal);
+  getCanastaRounds: (gameCode: text) -> (vec CanastaRound);
+  getGame: (code: text) -> (opt GameData);
+  saveBridgeDeal: (gameCode: text, deal: BridgeDeal) -> ();
+  saveCanastaRound: (gameCode: text, round: CanastaRound) -> ();
+  transform: (input: TransformationInput) -> (TransformationOutput) query;
+}

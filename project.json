@@ -1,0 +1,19 @@
+{
+  "overview": "Aplikacja do śledzenia wyników gier karcianych (Canasta i Bridge) z możliwością wprowadzania wartości ujemnych i edycji wpisów",
+  "features": [
+    "Wprowadzanie wyników Canasta i Bridge",
+    "Checkbox 'minus' dla wartości ujemnych na Androidzie",
+    "Inline edycja zapisanych wpisów",
+    "Automatyczne przeliczanie sum i pozycji",
+    "Kody gier i lista rozgrywek"
+  ],
+  "category": "productivity",
+  "tags": [
+    "card-games",
+    "score-tracker",
+    "canasta",
+    "bridge",
+    "polish"
+  ],
+  "last_updated": "2026-07-07T12:21:04.453Z"
+}

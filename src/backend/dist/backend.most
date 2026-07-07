@@ -1,0 +1,73 @@
+// Version: 1.0.0
+type BridgeDeal__233076616 =
+  {
+    actualScore : Int;
+    contract : Text;
+    dealNumber : Nat;
+    declarer : Text;
+    expectedScore : Int;
+    impScore : Int;
+    pcValue : Int;
+    timestamp : Time__38388344;
+    tricksTaken : Nat
+  };
+type CanastaRound__978143839 =
+  {
+    nsScore : Int;
+    roundNumber : Nat;
+    timestamp : Time__38388344;
+    weScore : Int
+  };
+type Data__80296667<K, V> =
+  {var count : Nat__1040412405; kvs : [var ?(K, V)]};
+type GameData__552543307 =
+  {
+    createdAt : Time__38388344;
+    finalScore : ?Int;
+    gameType : GameType__986855617
+  };
+type GameType__986855617 = {#bridge; #canasta};
+type Internal__41346355<K, V> =
+  {children : [var ?Node__1000929467<K, V>]; data : Data__80296667<K, V>};
+type Leaf__712614010<K, V> = {data : Data__80296667<K, V>};
+type Map__222667396<K, V> = Map__912772452<K, V>;
+type Map__709709801<K, V> =
+  {var root : Node__1000929467<K, V>; var size : Nat__1040412405};
+type Map__912772452<K, V> = Map__709709801<K, V>;
+type Nat__1040412405 = Nat__920180692;
+type Nat__920180692 = Nat;
+type Node__1000929467<K, V> =
+  {#internal : Internal__41346355<K, V>; #leaf : Leaf__712614010<K, V>};
+type Text__114076496 = Text;
+type Text__738329067 = Text__114076496;
+type Time__38388344 = Int;
+type Tree__4145630<K, V> =
+  {
+    #black : (Tree__4145630<K, V>, K, V, Tree__4145630<K, V>);
+    #leaf;
+    #red : (Tree__4145630<K, V>, K, V, Tree__4145630<K, V>)
+  };
+type UserRole__686137147 = {#admin; #guest; #user};
+actor {
+  stable accessControlState :
+    {
+      var adminAssigned : Bool;
+      userRoles : Map__222667396<Principal, UserRole__686137147>
+    };
+  stable var bridgeDeals :
+    {
+      root : Tree__4145630<Text__738329067, [BridgeDeal__233076616]>;
+      size : Nat
+    };
+  stable var canastaDealers :
+    {root : Tree__4145630<Text__738329067, Nat>; size : Nat};
+  stable var canastaRounds :
+    {
+      root : Tree__4145630<Text__738329067, [CanastaRound__978143839]>;
+      size : Nat
+    };
+  stable var gameCodes :
+    {root : Tree__4145630<Text__738329067, Bool>; size : Nat};
+  stable var games :
+    {root : Tree__4145630<Text__738329067, GameData__552543307>; size : Nat}
+};

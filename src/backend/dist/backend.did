@@ -1,0 +1,221 @@
+type UserRole = 
+ variant {
+   admin;
+   guest;
+   user;
+ };
+type Tree_4 = 
+ variant {
+   black: record {
+            Tree_4;
+            Text;
+            vec BridgeDeal__1;
+            Tree_4;
+          };
+   leaf;
+   red: record {
+          Tree_4;
+          Text;
+          vec BridgeDeal__1;
+          Tree_4;
+        };
+ };
+type Tree_3 = 
+ variant {
+   black: record {
+            Tree_3;
+            Text;
+            nat;
+            Tree_3;
+          };
+   leaf;
+   red: record {
+          Tree_3;
+          Text;
+          nat;
+          Tree_3;
+        };
+ };
+type Tree_2 = 
+ variant {
+   black: record {
+            Tree_2;
+            Text;
+            vec CanastaRound__1;
+            Tree_2;
+          };
+   leaf;
+   red: record {
+          Tree_2;
+          Text;
+          vec CanastaRound__1;
+          Tree_2;
+        };
+ };
+type Tree_1 = 
+ variant {
+   black: record {
+            Tree_1;
+            Text;
+            bool;
+            Tree_1;
+          };
+   leaf;
+   red: record {
+          Tree_1;
+          Text;
+          bool;
+          Tree_1;
+        };
+ };
+type Tree = 
+ variant {
+   black: record {
+            Tree;
+            Text;
+            GameData;
+            Tree;
+          };
+   leaf;
+   red: record {
+          Tree;
+          Text;
+          GameData;
+          Tree;
+        };
+ };
+type Time = int;
+type Text = text;
+type Result = 
+ variant {
+   err: Error;
+   ok;
+ };
+type Map_4 = 
+ record {
+   root: Tree_4;
+   size: nat;
+ };
+type Map_3 = 
+ record {
+   root: Tree_3;
+   size: nat;
+ };
+type Map_2 = 
+ record {
+   root: Tree_2;
+   size: nat;
+ };
+type Map_1 = 
+ record {
+   root: Tree_1;
+   size: nat;
+ };
+type Map = 
+ record {
+   root: Tree;
+   size: nat;
+ };
+type GameType = 
+ variant {
+   bridge;
+   canasta;
+ };
+type GameData = 
+ record {
+   createdAt: Time;
+   finalScore: opt int;
+   gameType: GameType;
+ };
+type Error = 
+ variant {
+   AmbiguousAttribute: record {
+                         field: text;
+                         sources: vec text;
+                       };
+   FrontendOriginMismatch: record {
+                             expected: vec text;
+                             got: text;
+                           };
+   FrontendOriginsNotConfigured;
+   MalformedCandid;
+   MissingField: text;
+   MixedSsoSources: record {
+                      otherKeys: vec text;
+                      ssoKeys: vec text;
+                    };
+   NoAttributes;
+   Stale: record {ageNs: nat;};
+   UnknownNonce;
+   UntrustedSsoSource: record {domain: text;};
+ };
+type CanastaRound__1 = 
+ record {
+   nsScore: int;
+   roundNumber: nat;
+   timestamp: Time;
+   weScore: int;
+ };
+type CanastaRound = 
+ record {
+   nsScore: int;
+   roundNumber: nat;
+   timestamp: int;
+   weScore: int;
+ };
+type BridgeDeal__1 = 
+ record {
+   actualScore: int;
+   contract: text;
+   dealNumber: nat;
+   declarer: text;
+   expectedScore: int;
+   impScore: int;
+   pcValue: int;
+   timestamp: Time;
+   tricksTaken: nat;
+ };
+type BridgeDeal = 
+ record {
+   actualScore: int;
+   contract: text;
+   dealNumber: nat;
+   declarer: text;
+   expectedScore: int;
+   impScore: int;
+   pcValue: int;
+   timestamp: int;
+   tricksTaken: nat;
+ };
+service : {
+  __accessControlState: () -> (reserved) query;
+  __bridgeDeals: () -> (Map_4) query;
+  __canastaDealers: () -> (Map_3) query;
+  __canastaRounds: () -> (Map_2) query;
+  __gameCodes: () -> (Map_1) query;
+  __games: () -> (Map) query;
+  _initialize_access_control: () -> ();
+  _internet_identity_sign_in_finish: () -> (Result);
+  _internet_identity_sign_in_start: () -> (blob);
+  assignCallerUserRole: (user: principal, role: UserRole) -> ();
+  createGame: (code: text, gameType: GameType) -> ();
+  finishGame: (code: text, finalScore: int) -> ();
+  generateGameCode: (userInput: text) -> (text);
+  getAllGames: () -> (vec record {
+                            text;
+                            GameData;
+                          });
+  getBridgeDeals: (gameCode: text) -> (vec BridgeDeal__1);
+  getCallerUserRole: () -> (UserRole) query;
+  getCanastaRounds: (gameCode: text) -> (vec CanastaRound__1);
+  getGame: (code: text) -> (opt GameData);
+  getNextDealer: (gameCode: text) -> (nat);
+  isCallerAdmin: () -> (bool) query;
+  saveBridgeDeal: (gameCode: text, deal: BridgeDeal__1) -> ();
+  saveCanastaRound: (gameCode: text, round: CanastaRound__1) -> ();
+  updateBridgeDeal: (gameCode: text, dealIndex: nat, contract: text,
+   declarer: text, tricksTaken: nat, pcValue: int, expectedScore: int,
+   actualScore: int, impScore: int) -> (opt BridgeDeal);
+  updateCanastaRound: (gameCode: text, roundIndex: nat, nsScore: int,
+   weScore: int) -> (opt CanastaRound);
+}

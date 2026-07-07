@@ -1,0 +1,195 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --radius: 0.75rem;
+    --background: 0.98 0.02 120;
+    --foreground: 0.15 0.05 25;
+    --card: 0.96 0.03 130;
+    --card-foreground: 0.15 0.05 25;
+    --popover: 0.96 0.03 130;
+    --popover-foreground: 0.15 0.05 25;
+    --primary: 0.35 0.12 140;
+    --primary-foreground: 0.98 0.02 120;
+    --secondary: 0.92 0.04 125;
+    --secondary-foreground: 0.25 0.08 25;
+    --muted: 0.92 0.04 125;
+    --muted-foreground: 0.55 0.08 25;
+    --accent: 0.88 0.06 135;
+    --accent-foreground: 0.25 0.08 25;
+    --destructive: 0.65 0.25 15;
+    --destructive-foreground: 0.98 0.02 120;
+    --border: 0.85 0.06 130;
+    --input: 0.85 0.06 130;
+    --ring: 0.35 0.12 140;
+    --chart-1: 0.45 0.15 140;
+    --chart-2: 0.55 0.18 160;
+    --chart-3: 0.65 0.2 180;
+    --chart-4: 0.75 0.22 200;
+    --chart-5: 0.7 0.18 120;
+    --sidebar: 0.98 0.02 120;
+    --sidebar-foreground: 0.15 0.05 25;
+    --sidebar-primary: 0.35 0.12 140;
+    --sidebar-primary-foreground: 0.98 0.02 120;
+    --sidebar-accent: 0.92 0.04 125;
+    --sidebar-accent-foreground: 0.25 0.08 25;
+    --sidebar-border: 0.85 0.06 130;
+    --sidebar-ring: 0.55 0.08 25;
+  }
+
+  .dark {
+    --background: 0.12 0.05 140;
+    --foreground: 0.95 0.03 120;
+    --card: 0.18 0.06 135;
+    --card-foreground: 0.95 0.03 120;
+    --popover: 0.22 0.07 135;
+    --popover-foreground: 0.95 0.03 120;
+    --primary: 0.75 0.15 130;
+    --primary-foreground: 0.18 0.06 135;
+    --secondary: 0.22 0.07 135;
+    --secondary-foreground: 0.95 0.03 120;
+    --muted: 0.22 0.07 135;
+    --muted-foreground: 0.65 0.08 125;
+    --accent: 0.28 0.08 140;
+    --accent-foreground: 0.95 0.03 120;
+    --destructive: 0.75 0.22 15;
+    --destructive-foreground: 0.18 0.06 135;
+    --border: 0.95 0.03 120 / 15%;
+    --input: 0.95 0.03 120 / 20%;
+    --ring: 0.65 0.08 125;
+    --chart-1: 0.45 0.25 140;
+    --chart-2: 0.65 0.18 160;
+    --chart-3: 0.75 0.2 180;
+    --chart-4: 0.6 0.28 200;
+    --chart-5: 0.7 0.25 120;
+    --sidebar: 0.18 0.06 135;
+    --sidebar-foreground: 0.95 0.03 120;
+    --sidebar-primary: 0.45 0.25 140;
+    --sidebar-primary-foreground: 0.95 0.03 120;
+    --sidebar-accent: 0.22 0.07 135;
+    --sidebar-accent-foreground: 0.95 0.03 120;
+    --sidebar-border: 0.95 0.03 120 / 15%;
+    --sidebar-ring: 0.55 0.08 125;
+  }
+
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+}
+
+@layer components {
+  .game-card {
+    @apply bg-gradient-to-br from-card via-card to-accent/5 border-0 shadow-sm hover:shadow-md transition-all duration-200;
+  }
+
+  .game-code {
+    @apply font-mono text-lg font-bold bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent;
+  }
+
+  .mobile-safe {
+    @apply min-h-[100dvh] pb-4;
+  }
+
+  .touch-target {
+    @apply min-h-[44px] min-w-[44px];
+  }
+
+  .felt-background {
+    @apply bg-gradient-to-br from-primary/5 via-background to-accent/10;
+  }
+
+  .card-table {
+    @apply bg-gradient-to-br from-primary/10 via-card to-accent/5 border border-primary/20 shadow-lg;
+  }
+
+  .canasta-threshold-hint {
+    @apply p-3 rounded-lg border-l-4 border-primary bg-primary/5 text-sm;
+  }
+
+  .bridge-score-display {
+    @apply p-2 bg-accent/20 rounded border border-accent/30 font-mono text-sm;
+  }
+
+  /* Mobile-specific improvements for game state switches */
+  .mobile-game-state {
+    @apply flex items-center justify-start space-x-3 py-2;
+  }
+
+  .mobile-switch {
+    @apply scale-90 sm:scale-100;
+  }
+
+  /* Improved mobile switch styling */
+  .mobile-switch[data-state="checked"] {
+    @apply bg-primary;
+  }
+
+  .mobile-switch[data-state="unchecked"] {
+    @apply bg-input;
+  }
+}
+
+/* Mobile-specific improvements */
+@media (max-width: 768px) {
+  .container {
+    @apply px-3;
+  }
+
+  .card-content-mobile {
+    @apply p-3;
+  }
+
+  .text-mobile {
+    @apply text-sm;
+  }
+
+  .button-mobile {
+    @apply text-sm px-3 py-2;
+  }
+
+  /* Better mobile switch sizing */
+  .mobile-game-state {
+    @apply py-3;
+  }
+
+  .mobile-game-state .mobile-switch {
+    @apply scale-75;
+  }
+
+  /* Improve touch targets for mobile switches */
+  .mobile-game-state label {
+    @apply text-xs leading-tight;
+  }
+}
+
+/* Ensure proper touch targets on mobile */
+@media (pointer: coarse) {
+  button,
+  [role="button"],
+  input[type="button"],
+  input[type="submit"],
+  .touch-target {
+    @apply min-h-[44px] min-w-[44px];
+  }
+
+  /* Better mobile switch interaction */
+  .mobile-switch {
+    @apply min-h-[32px] min-w-[52px];
+  }
+}
+
+/* Additional mobile responsiveness for switches */
+@media (max-width: 480px) {
+  .mobile-game-state {
+    @apply flex-col items-start space-x-0 space-y-2 py-2;
+  }
+
+  .mobile-game-state > div {
+    @apply flex items-center space-x-2 w-full;
+  }
+}
